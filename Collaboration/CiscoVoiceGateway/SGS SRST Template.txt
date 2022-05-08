@@ -1,0 +1,229 @@
+
+!
+hostname %Site Name%-VG01
+!
+ip domain name saudiags.com
+!
+voice service voip
+ allow-connections h323 to h323
+ allow-connections h323 to sip
+ allow-connections sip to h323
+ allow-connections sip to sip
+ fax protocol t38 version 0 ls-redundancy 0 hs-redundancy 0 fallback none
+ sip
+  bind control source-interface GigabitEthernet0/0/0
+  bind media source-interface GigabitEthernet0/0/0
+  registrar server expires max 600 min 60
+!
+voice class codec 1
+ codec preference 1 g711alaw
+ codec preference 2 g711ulaw
+ codec preference 3 g729r8
+ codec preference 4 g729br8
+!
+!
+voice class custom-cptone fxo-custom
+ dualtone disconnect
+  frequency 426
+  cadence 500 500 500 500
+!
+voice register global
+ mode esrst
+ no allow-hash-in-dn
+ system message SRST_MODE
+ max-dn 400
+ max-pool 110
+ 
+!
+voice register pool  1
+ id network <<VOICE VLAN NETWORK ex: 192.168.226.0>> mask 255.255.255.0
+ dtmf-relay rtp-nte sip-kpml cisco-rtp sip-notify
+ codec g711ulaw
+ no vad
+!
+!
+
+!
+username admin privilege 15 secret S@ud19R0und@sTCs
+!
+
+!
+interface GigabitEthernet0/0/0
+ ip address << VG LAN IP >> 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet0/1/0
+ no ip address
+ negotiation auto
+!
+interface Service-Engine0/2/0
+ no ip address
+!
+interface Service-Engine0/4/0
+ no ip address
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ negotiation auto
+!
+interface Vlan1
+ no ip address
+!
+ip default-gateway << SW IP >>
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip tftp source-interface GigabitEthernet0/0/0
+ip route 0.0.0.0 0.0.0.0 << SW IP >>
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+voice-port 0/2/0
+ supervisory disconnect dualtone mid-call
+ supervisory custom-cptone fxo-custom
+ input gain -3
+ echo-cancel coverage 24
+ cptone BR
+ timeouts call-disconnect 1
+ timeouts wait-release 1
+ caller-id enable
+ caller-id alerting line-reversal
+ caller-id alerting dsp-pre-allocate
+!
+voice-port 0/2/1
+ supervisory disconnect dualtone mid-call
+ supervisory custom-cptone fxo-custom
+ input gain -3
+ echo-cancel coverage 24
+ cptone BR
+ timeouts call-disconnect 1
+ timeouts wait-release 1
+ caller-id enable
+ caller-id alerting line-reversal
+ caller-id alerting dsp-pre-allocate
+!
+voice-port 0/2/2
+ supervisory disconnect dualtone mid-call
+ supervisory custom-cptone fxo-custom
+ input gain -3
+ echo-cancel coverage 24
+ cptone BR
+ timeouts call-disconnect 1
+ timeouts wait-release 1
+ caller-id enable
+ caller-id alerting line-reversal
+ caller-id alerting dsp-pre-allocate
+!
+voice-port 0/2/3
+ supervisory disconnect dualtone mid-call
+ supervisory custom-cptone fxo-custom
+ input gain -3
+ echo-cancel coverage 24
+ cptone BR
+ timeouts call-disconnect 1
+ timeouts wait-release 1
+ caller-id enable
+ caller-id alerting line-reversal
+ caller-id alerting dsp-pre-allocate
+ !
+ !
+ !
+ !
+ !
+!
+mgcp behavior rsip-range tgcp-only
+mgcp behavior comedia-role none
+mgcp behavior comedia-check-media-src disable
+mgcp behavior comedia-sdp-force disable
+!
+mgcp profile default
+!
+!
+!
+dial-peer voice 1 pots
+ destination-pattern .T
+ port 0/2/0
+ forward-digits all
+!
+dial-peer voice 2 pots
+ destination-pattern .T
+ port 0/2/1
+ forward-digits all
+!
+dial-peer voice 3 pots
+ destination-pattern .T
+ port 0/2/2
+ forward-digits all
+!
+dial-peer voice 4 pots
+ destination-pattern .T
+ port 0/2/3
+ forward-digits all
+!
+!
+!
+!
+sip-ua
+ registrar 1 ipv4:<< CUCM Pub IP>> expires 600
+ registrar 2 ipv4:<< CUCM Sub1 IP>> expires 600
+ registrar 3 ipv4:<< CUCM Sub2 IP>> expires 600
+!
+
+!
+call-manager-fallback
+ max-conferences 8 gain -6
+ transfer-system full-consult
+ ip source-address << VG LAN IP>> port 2000
+ max-ephones 110
+ max-dn 400
+ max-redirect 20
+ system message primary SRST_MODE
+ system message secondary SRST_MODE
+ keepalive 20
+ no huntstop
+ alias 1 XXXX to XXYY
+ time-zone 31
+ date-format dd-mm-yy
+!
+banner login ^CCCC
+********************************************************************
+**          %Company Name% %Site Name% Branch Network             **
+**               unauthorized Access is Prohibited                **
+**              You are monitored and will be prosecuted          **
+**              with the full extension of the law                **
+********************************************************************
+^C
+!
+line con 0
+ login local
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ access-class 50 in
+ privilege level 15
+ login local
+ transport input telnet ssh
+line vty 5 15
+ access-class 50 in
+ privilege level 15
+ login local
+ transport input telnet ssh
+!
+!
+
