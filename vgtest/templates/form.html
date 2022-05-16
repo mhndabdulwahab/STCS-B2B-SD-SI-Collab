@@ -1,0 +1,101 @@
+<div class="container">
+  <title> Voice Gateway </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+     <br>
+     <br>
+     
+          <h3 style="color:rgb(19, 0, 0) ; text-align:center ;" >Please Enter Voice Gateway Information</h3>
+
+    
+
+     <br/><br/>
+
+     <form action="/configuration"  method="post">
+
+
+<div class="mb-3">
+
+ <center > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <input type="text" class="form-control" id="VoiceGatewayIP" 
+  placeholder="VoiceGateway IP" name="VoiceGatewayIP" style="border-color:rebeccapurple" size="10">
+  
+   <input type="text" class="form-control" id="VoiceGatewayUsername" 
+  placeholder=" Username" name="VoiceGatewayUsername" style="border-color:rebeccapurple" size="10">
+   
+
+ <input type="password" class="form-control" id="VoiceGatewayPassword"
+ placeholder=" Password" name="VoiceGatewayPassword" style="border-color:rebeccapurple"size="10"></center>
+
+
+
+</div>
+
+</br>
+
+<div class="mb-3">
+
+  <center> <label style="color: rgb(0, 0, 0)"  >Range</label>
+
+    <input type="text" class="form-control" id="FirstField" maxlength = "2"
+  name="FirstField" style="border-color:rebeccapurple"size="2">
+
+
+  <input type="text" class="form-control" id="SecondField" maxlength = "3"
+   name="SecondField" style="border-color:rebeccapurple"size="3">
+
+  <input type="text" class="form-control" id="ThirdField" maxlength = "4" 
+   name="ThirdField" style="border-color:rebeccapurple" size="4" >
+  <label style="color: rgb(0, 0, 0)"  >To</label>
+  
+  <input type="text" class="form-control" id="FirstFieldR2" maxlength = "2"
+   name="FirstFieldR2" style="border-color:rebeccapurple"size="2">
+
+
+  <input type="text" class="form-control" id="SecondFieldR2" maxlength = "3"
+   name="SecondFieldR2" style="border-color:rebeccapurple"size="3">
+
+  <input type="text" class="form-control" id="ThirdFieldR3" maxlength = "4"
+   name="ThirdFieldR2" style="border-color:rebeccapurple" size="4">
+
+</div>
+</br>
+
+
+<div class="mb-3">
+
+  <center >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="text" class="form-control" id="STCCustomerIP"
+    placeholder="CustomerIP" name="STCCustomerIP" style="border-color:rebeccapurple" size="10">
+   
+    <input type="text" class="form-control" id="ISP_IP"
+  placeholder="ISP IP" name="ISP_IP" style="border-color:rebeccapurple" size="10">
+
+  <input type="text" class="form-control" id="ISP_SIP_Proxy_IP"
+  placeholder="ISP SIP Proxy " name="ISP_SIP_Proxy_IP" style="border-color:rebeccapurple" size="10"></center>
+</div>
+ </br>
+  
+
+
+<div class="mb-3">
+
+  <center >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <input type="text" class="form-control" id="PrimaryCallManager"
+  placeholder="PrimaryCallManager" name="PrimaryCallManager" style="border-color:rebeccapurple"size="10">
+ 
+ 
+  <input type="text" class="form-control" id="SecondaryCallManager"
+  placeholder="SecondaryCallManager" name="SecondaryCallManager" style="border-color:rebeccapurple"size="10"></center>
+ </div>
+ </br>
+
+
+
+
+<div class="mb-3">
+
+<center>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button type="submit" class="btn btn-secondary">Submit </center></button>
+</form>
+
+ </div>
