@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Voice Gateway Automation</title>
+    <style>
+      html, body {
+      min-height: 100%;
+      background-color: #3e1170;
+      }
+      body, div, form, input, textarea, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+       ;
+      }
+      
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 32px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 50%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 10px 0 #3E1170; 
+      }
+      .banner {
+      position: relative;
+      height: 210px;
+      background-image: url("/static/header.png");      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      }
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.4); 
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+      input.item {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+     
+      .item:hover p, input:hover::placeholder {
+      color: #3E1170;
+      }
+      .item input:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #3E1170;
+      color: #3E1170;
+      
+      }
+      .item {
+      position: relative;
+      margin: 30px 0;
+     
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      background: #3E1170;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #3E1170;
+      }
+      footer {
+       margin: 20px auto;
+       text-align: center;
+     }
+      
+    </style>
+  </head>
+  <body>
+    <div class="testbox">
+      <form action="/configuration"  method="post">
+        <div class="banner">
+          <h1>Voice Gateway Automation</h1>
+          
+        </div>
+        <div class="item">
+          
+          <p>Please Enter Voice Gateway Information</p>
+          <br>
+          &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" name="VoiceGatewayIP" placeholder="Voice Gateway IP" id="VoiceGatewayIP"/>  &nbsp; &nbsp;
+            <input type="text" name="VoiceGatewayUsername" placeholder="Voice Gateway Username" id="VoiceGatewayUsername"/>&nbsp; &nbsp;
+            <input type="password" name="VoiceGatewayPassword" placeholder="Voice Gateway Password" id="VoiceGatewayPassword"/>
+        </div>
+        
+        <div class="item">
+          &nbsp; &nbsp; &nbsp; &nbsp;  <input type="text" name="PrimaryCallManager" placeholder="Primary Call Manager" id="PrimaryCallManager"/> &nbsp; &nbsp;
+            <input type="text" name="SecondaryCallManager" placeholder="Secondary Call Manager" id="SecondaryCallManager"/> &nbsp; &nbsp;
+            <input type="text" name="STCCustomerIP" placeholder="STC Customer IP" id="STCCustomerIP"/>
+        </div>
+        
+      <div class="item">
+        &nbsp; &nbsp; &nbsp; &nbsp;<input type="text" name="ISP_IP" placeholder="ISP IP" id="ISP_IP"/> &nbsp; &nbsp;
+        <input type="text" name="ISP_SIP_Proxy_IP" placeholder="ISP SIP Proxy IP" id="ISP_SIP_Proxy_IP"/>
+    </div>
+    <div class="item">
+      
+          <p>DID/DOD Range Number</p>
+          &nbsp; &nbsp; &nbsp; &nbsp; <label style="color: rgb(0, 0, 0)"  >From</label> 
+          <input type="text" name="FirstField"  id="FirstField" maxlength="2" size="2"/>
+          <input type="text" name="SecondField"  id="SecondField" maxlength="3" size="3"/>
+          <input type="text" name="ThirdField"  id="ThirdField" maxlength="4" size="4"/>
+          <label style="color: rgb(0, 0, 0)"  >To</label>     
+          <input type="text" name="FirstFieldR2"  id="FirstFieldR2" maxlength="2" size="2"/>
+          <input type="text" name="SecondFieldR2"  id="SecondFieldR2" maxlength="3" size="3"/>
+          <input type="text" name="ThirdFieldR2"  id="ThirdFieldR2" maxlength="4" size="4"/>
+        </div>
+         
+    
+    <p>Connection Type</p>
+      <input type="radio" id="Telnet" name="connection" value="Telnet" >
+      <label for="Telnet">Telnet</label><br>
+      <input type="radio" id="SSH" name="connection" value="SSH" >
+      <label for="SSH">SSH</label> 
+    <p>Deployment Model </p>
+      <input type="radio" id="on_prem" name="hosted" value="on_prem" onclick="removeQuestion()">
+      <label for="on_prem">On-Prem</label><br>
+      <input type="radio" id="Hosted_collab_solution" name="hosted" value="Hosted collab solution"onclick="addQuestion()">
+      <label for="Hosted_collab_solution">HCS Cloud </label>
+      <div id="question"></div>
+
+    <script>
+
+      function addQuestion(){
+
+          var question = document.getElementById("question");
+
+          question.innerHTML='<p> Cluster Option </p><input type="radio" name="cluster" id="shared_cluster" value="shared_cluster"  /><label for="sharedcluster">Shared cluster</label><br><input type="radio" name="cluster" id="dedictied_cluster" value="dedictied_cluster"  /><label for="dedictied cluster">Dedictied cluster</label>'
+
+         
+
+      }
+
+   
+
+      function removeQuestion(){
+
+          var question = document.getElementById("question");
+
+          question.innerHTML="";
+
+      }
+
+    </script>  
+
+        <div class="btn-block">
+
+          <button type="submit" href="/">APPLY</button>
+
+        </div>
+
+       
+
+      </form>
+
+     
+
+    </div>
+  </body>
+  <footer>
+          &copy; 2022 Solutions by stc<br>
+          Solution Delivary<br>
+          PS-Collaburation and Multimedia
+          
+        </footer>
+</html>
